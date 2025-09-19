@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=3 uid="uid://bla62ifexqki0"]
+
+[ext_resource type="Texture2D" uid="uid://cej7sso2s6a7j" path="res://assets/images/d238eee637cb1b69bde4bdcd7efba5d7_t.jpeg" id="1_q6r6c"]
+[ext_resource type="Script" uid="uid://c0dfivc3y7vdv" path="res://button_déclenchement_trigger.gd" id="1_wtcfe"]
+[ext_resource type="AudioStream" uid="uid://cxtutl8uv446j" path="res://AAAAUUUGHHHH Meme Sound Effect.mp3" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://pitqlgbdprw2" path="res://button_interrupteur_toggle.gd" id="3_0hol4"]
+[ext_resource type="AudioStream" uid="uid://bo7ohnax4wemp" path="res://Cat meow sound effect.mp3" id="3_epypp"]
+[ext_resource type="Texture2D" uid="uid://yiin6vlg4sev" path="res://assets/chat.png" id="6_kdubu"]
+[ext_resource type="Texture2D" uid="uid://bccmq33eb42b6" path="res://assets/images/souris.png" id="7_rj586"]
+[ext_resource type="Script" uid="uid://bt7es2ju4h8xn" path="res://animated_sprite_2d.gd" id="8_4d7sh"]
+[ext_resource type="Script" uid="uid://urbmykglci1e" path="res://animated_sprite_2d_2.gd" id="9_4d7sh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir8iy"]
+atlas = ExtResource("7_rj586")
+region = Rect2(0, 0, 92, 92)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqns4"]
+atlas = ExtResource("7_rj586")
+region = Rect2(92, 0, 92, 92)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4d7sh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir8iy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqns4")
+}],
+"loop": true,
+"name": &"souris",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hol4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0ka3"]
+atlas = ExtResource("6_kdubu")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h7mo"]
+atlas = ExtResource("6_kdubu")
+region = Rect2(72, 0, 72, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nr8wp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0ka3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0h7mo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(703.5, 433.5)
+scale = Vector2(2.20627, 2.25)
+texture = ExtResource("1_q6r6c")
+
+[node name="souris" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1072, 772)
+scale = Vector2(0.867226, 0.843373)
+sprite_frames = SubResource("SpriteFrames_4d7sh")
+animation = &"souris"
+autoplay = "souris"
+frame_progress = 0.559963
+script = ExtResource("8_4d7sh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="souris"]
+position = Vector2(196.027, -152.957)
+scale = Vector2(1.1531, 1.18571)
+sprite_frames = SubResource("SpriteFrames_0hol4")
+
+[node name="Button_déclenchement_trigger" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = -0.245
+anchor_top = 0.733
+anchor_right = -0.245
+anchor_bottom = 0.733
+offset_left = 923.0
+offset_top = 830.999
+offset_right = 1001.0
+offset_bottom = 861.999
+text = "NORMAL
+"
+script = ExtResource("1_wtcfe")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1235, 737)
+scale = Vector2(3.09028, 3.28852)
+stream = ExtResource("2_0e48y")
+
+[node name="chat" type="AnimatedSprite2D" parent="."]
+position = Vector2(1239, 715)
+scale = Vector2(3.09028, 3.28852)
+sprite_frames = SubResource("SpriteFrames_nr8wp")
+autoplay = "default"
+frame_progress = 0.979565
+script = ExtResource("9_4d7sh")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="chat"]
+position = Vector2(-11.0023, 20.9821)
+scale = Vector2(0.323595, 0.304088)
+stream = ExtResource("3_epypp")
+parameters/looping = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="chat"]
+position = Vector2(-58.2471, 19.7657)
+
+[node name="Button_interrupteur_toggle" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 2.545
+anchor_right = 2.545
+offset_left = 1217.0
+offset_top = 867.0
+offset_right = 1290.0
+offset_bottom = 903.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+text = "LOOPED"
+script = ExtResource("3_0hol4")
+
+[connection signal="pressed" from="Button_déclenchement_trigger" to="Button_déclenchement_trigger" method="_on_pressed"]
+[connection signal="pressed" from="Button_interrupteur_toggle" to="Button_déclenchement_trigger" method="_on_button_interrupteur_toggle_pressed"]
+[connection signal="pressed" from="Button_interrupteur_toggle" to="Button_interrupteur_toggle" method="_on_pressed"]
+[connection signal="toggled" from="Button_interrupteur_toggle" to="Button_interrupteur_toggle" method="_on_toggled"]
